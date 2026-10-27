@@ -37,18 +37,33 @@
   --color-tier-platinum: var(--tier-platinum);
   --color-tier-diamond: var(--tier-diamond);
   --font-sans: var(--font-noto-sans-kr), system-ui, sans-serif;
+  --font-display: var(--font-black-han-sans), var(--font-noto-sans-kr), sans-serif;
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
   --radius-card: 1.25rem;
 }
 
 html {
-  scroll-behavior: smooth;
+  font-size: 17px; /* 모바일 기본 글자 크기 (rem 기준이라 전체가 함께 커집니다) */
   scroll-padding-top: 5rem; /* 고정 헤더에 제목이 가려지지 않게 */
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  word-break: keep-all; /* 한글을 단어 중간이 아닌 띄어쓰기에서만 줄바꿈 */
 }
 
 ::selection {
@@ -60,4 +75,57 @@ body {
 :focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 3px;
+}
+
+/*
+  애니메이션 (transform 과 opacity 만 사용)
+  - .rise : 첫 화면에서 한 번만 순서대로 나타나는 효과. 인라인 --i 로 순서를 정합니다.
+  - .grow-x : 막대가 스크롤에 맞춰 차오르는 효과. 지원하지 않는 브라우저에서는 그냥 채워진 상태로 보입니다.
+*/
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 420ms var(--ease-out-quint) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .grow-x {
+    transform-origin: left;
+    animation: grow-x linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+}
+
+/* 시스템에서 "동작 줄이기"를 켠 사용자에게는 움직임을 모두 끕니다. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+
+  .rise,
+  .grow-x {
+    animation: none !important;
+  }
 }

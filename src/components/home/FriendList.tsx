@@ -1,4 +1,4 @@
-import { Card, SectionHeader, SoonButton } from "@/components/ui";
+import { SectionHeader, SoonButton } from "@/components/ui";
 import {
   FRIEND_STATUS_LABEL,
   PREVIEW_FRIENDS,
@@ -8,7 +8,7 @@ import {
 const DOT_CLASS: Record<FriendStatus, string> = {
   online: "bg-online",
   playing: "bg-primary",
-  offline: "bg-muted/50",
+  offline: "bg-muted/60",
 };
 
 export default function FriendList() {
@@ -19,40 +19,38 @@ export default function FriendList() {
       <SectionHeader
         id="friends"
         title="친구"
-        desc={`접속 중 ${onlineCount}명 / 전체 ${PREVIEW_FRIENDS.length}명`}
+        note={`지금 ${onlineCount}명이 접속 중이에요`}
         preview
       />
-      <Card className="!p-3 sm:!p-4">
-        <ul className="divide-y divide-card-border">
-          {PREVIEW_FRIENDS.map((friend) => (
-            <li key={friend.id} className="flex items-center gap-3 px-2 py-3">
-              <div className="relative">
-                <span
-                  aria-hidden
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-surface text-sm font-bold text-secondary"
-                >
-                  {friend.name.slice(-2, -1)}
-                </span>
-                <span
-                  aria-hidden
-                  className={`absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border-2 border-card ${DOT_CLASS[friend.status]}`}
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">{friend.name}</p>
-                <p className="truncate text-xs text-muted">
-                  {FRIEND_STATUS_LABEL[friend.status]} · {friend.detail}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="px-2 pt-3">
-          <SoonButton variant="ghost" className="w-full">
-            친구 추가
-          </SoonButton>
-        </div>
-      </Card>
+      <ul className="space-y-1">
+        {PREVIEW_FRIENDS.map((friend) => (
+          <li key={friend.id} className="flex items-center gap-4 py-2">
+            <div className="relative shrink-0">
+              <span
+                aria-hidden
+                className={`flex h-12 w-12 items-center justify-center rounded-full bg-surface font-display text-xl ${
+                  friend.status === "offline" ? "text-muted" : "text-secondary"
+                }`}
+              >
+                {friend.initial}
+              </span>
+              <span
+                aria-hidden
+                className={`absolute -right-0.5 -bottom-0.5 h-4 w-4 rounded-full border-[3px] border-background ${DOT_CLASS[friend.status]}`}
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-lg font-medium">{friend.name}</p>
+              <p className="truncate text-base text-muted">
+                {FRIEND_STATUS_LABEL[friend.status]}, {friend.detail}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4">
+        <SoonButton variant="ghost">친구 추가</SoonButton>
+      </div>
     </section>
   );
 }

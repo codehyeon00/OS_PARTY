@@ -7,6 +7,14 @@
   (화면에는 "예시" 표시가 함께 나옵니다 — src/components/ui.tsx 의 PreviewTag)
 */
 
+export type PreviewGame = { id: string; name: string; mode: string };
+
+export const PREVIEW_GAMES: PreviewGame[] = [
+  { id: "g1", name: "배틀 아레나", mode: "5명 팀전" },
+  { id: "g2", name: "던전 크롤", mode: "4명 협동" },
+  { id: "g3", name: "레이싱 리그", mode: "최대 8명" },
+];
+
 export type PreviewParty = {
   id: string;
   game: string;
@@ -27,6 +35,7 @@ export type FriendStatus = "online" | "playing" | "offline";
 export type PreviewFriend = {
   id: string;
   name: string;
+  initial: string;
   status: FriendStatus;
   detail: string;
 };
@@ -38,11 +47,11 @@ export const FRIEND_STATUS_LABEL: Record<FriendStatus, string> = {
 };
 
 export const PREVIEW_FRIENDS: PreviewFriend[] = [
-  { id: "f1", name: "샘플유저 가온", status: "playing", detail: "배틀 아레나" },
-  { id: "f2", name: "샘플유저 나래", status: "online", detail: "대기 중" },
-  { id: "f3", name: "샘플유저 다솜", status: "online", detail: "대기 중" },
-  { id: "f4", name: "샘플유저 라온", status: "offline", detail: "2시간 전" },
-  { id: "f5", name: "샘플유저 마루", status: "offline", detail: "어제" },
+  { id: "f1", name: "샘플 가온", initial: "가", status: "playing", detail: "배틀 아레나" },
+  { id: "f2", name: "샘플 나래", initial: "나", status: "online", detail: "대기 중" },
+  { id: "f3", name: "샘플 다솜", initial: "다", status: "online", detail: "대기 중" },
+  { id: "f4", name: "샘플 라온", initial: "라", status: "offline", detail: "2시간 전" },
+  { id: "f5", name: "샘플 마루", initial: "마", status: "offline", detail: "어제" },
 ];
 
 export type Tier = "bronze" | "silver" | "gold" | "platinum" | "diamond";
@@ -64,7 +73,7 @@ export const TIER_TEXT_CLASS: Record<Tier, string> = {
   diamond: "text-tier-diamond",
 };
 
-export const TIER_BAR_CLASS: Record<Tier, string> = {
+export const TIER_BG_CLASS: Record<Tier, string> = {
   bronze: "bg-tier-bronze",
   silver: "bg-tier-silver",
   gold: "bg-tier-gold",

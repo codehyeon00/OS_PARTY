@@ -6,16 +6,18 @@ export default function MobileNav() {
   return (
     <nav
       aria-label="모바일 메뉴"
-      className="fixed inset-x-0 bottom-0 z-30 border-t border-card-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+      className="fixed inset-x-0 bottom-0 z-30 bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
       <ul className="mx-auto grid max-w-md grid-cols-5">
         {NAV_ITEMS.map((item) => (
           <li key={item.href}>
             <a
               href={item.href}
-              className="flex flex-col items-center gap-1 py-2.5 text-[11px] text-muted active:text-primary"
+              className="group flex flex-col items-center gap-1 py-3 text-xs text-muted transition-colors duration-150 active:text-primary"
             >
-              <NavIcon name={item.icon} />
+              <span className="transition-transform duration-100 ease-out group-active:scale-90">
+                <NavIcon name={item.icon} />
+              </span>
               {item.label}
             </a>
           </li>

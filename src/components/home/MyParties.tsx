@@ -1,60 +1,46 @@
-import { Card, SectionHeader, SoonButton } from "@/components/ui";
+import { SectionHeader } from "@/components/ui";
 import { PREVIEW_PARTIES } from "@/data/preview";
+
+/** 모집 인원을 점으로 보여줍니다 (채워진 점 = 참가한 인원). */
+function Seats({ members, capacity }: { members: number; capacity: number }) {
+  return (
+    <div
+      role="img"
+      aria-label={`${capacity}명 중 ${members}명 참가`}
+      className="flex items-center gap-1.5"
+    >
+      {Array.from({ length: capacity }, (_, i) => (
+        <span
+          key={i}
+          aria-hidden
+          className={`h-3.5 w-3.5 rounded-full ${i < members ? "bg-primary" : "bg-foreground/20"}`}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function MyParties() {
   return (
     <section aria-labelledby="parties">
       <SectionHeader id="parties" title="내 파티" preview />
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="flex flex-col justify-between gap-6 border-primary/40 bg-gradient-to-br from-card to-surface sm:col-span-2">
-          <div>
-            <p className="text-sm font-medium text-secondary">NEW PARTY</p>
-            <h3 className="mt-1 text-2xl font-extrabold">새 파티 만들기</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
-              게임과 시간, 인원을 정하면 친구들에게 초대를 보낼 수 있어요.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <SoonButton>파티 만들기</SoonButton>
-            <SoonButton variant="ghost">초대 코드로 참가</SoonButton>
-          </div>
-        </Card>
-
+      <ul className="divide-y divide-foreground/10">
         {PREVIEW_PARTIES.map((party) => (
-          <Card key={party.id}>
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-xs text-secondary">{party.game}</p>
-                <h3 className="mt-1 font-bold">{party.title}</h3>
-              </div>
-              <span className="shrink-0 rounded-full bg-surface px-3 py-1 text-xs text-muted">
-                {party.time}
-              </span>
+          <li
+            key={party.id}
+            className="grid items-center gap-x-6 gap-y-2 py-5 sm:grid-cols-[9rem_1fr_auto]"
+          >
+            <p className="font-display text-2xl font-normal text-secondary">
+              {party.time}
+            </p>
+            <div>
+              <p className="text-xl font-bold">{party.title}</p>
+              <p className="text-base text-muted">{party.game}</p>
             </div>
-            <div className="mt-4">
-              <div className="mb-1.5 flex justify-between text-xs text-muted">
-                <span>모집 현황</span>
-                <span>
-                  {party.members} / {party.capacity}명
-                </span>
-              </div>
-              <div
-                role="progressbar"
-                aria-label="모집 현황"
-                aria-valuemin={0}
-                aria-valuemax={party.capacity}
-                aria-valuenow={party.members}
-                className="h-2 overflow-hidden rounded-full bg-surface"
-              >
-                <div
-                  className="h-full rounded-full bg-primary"
-                  style={{ width: `${(party.members / party.capacity) * 100}%` }}
-                />
-              </div>
-            </div>
-          </Card>
+            <Seats members={party.members} capacity={party.capacity} />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
