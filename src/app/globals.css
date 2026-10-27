@@ -12,6 +12,13 @@
   --secondary: #ffaa55; /* 보조 강조색 */
   --foreground: #f6f0e4; /* 기본 글자 (밝은 아이보리) */
   --muted: #a39a8e; /* 보조 글자 (따뜻한 회색) */
+  --surface: #2a231d; /* 카드 안쪽 작은 영역 */
+  --online: #6fcf8b; /* 온라인 상태 */
+  --tier-bronze: #c2814f;
+  --tier-silver: #b9b2a8;
+  --tier-gold: #f2b84b;
+  --tier-platinum: #7fd1c4;
+  --tier-diamond: #8fb8e8;
 }
 
 @theme inline {
@@ -22,8 +29,20 @@
   --color-secondary: var(--secondary);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-online: var(--online);
+  --color-tier-bronze: var(--tier-bronze);
+  --color-tier-silver: var(--tier-silver);
+  --color-tier-gold: var(--tier-gold);
+  --color-tier-platinum: var(--tier-platinum);
+  --color-tier-diamond: var(--tier-diamond);
   --font-sans: var(--font-noto-sans-kr), system-ui, sans-serif;
   --radius-card: 1.25rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* 고정 헤더에 제목이 가려지지 않게 */
 }
 
 body {

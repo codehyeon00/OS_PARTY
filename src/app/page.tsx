@@ -1,65 +1,38 @@
-// 홈 화면. 아직 실제 기능은 없고, 디자인 시스템을 보여주는 뼈대입니다.
-const upcoming = [
-  {
-    title: "파티 만들기",
-    desc: "게임, 인원, 시간을 정해 나만의 파티를 열어요.",
-  },
-  {
-    title: "파티 찾기",
-    desc: "원하는 게임의 파티를 골라 바로 참가해요.",
-  },
-  {
-    title: "실시간 소통",
-    desc: "파티원과 실시간으로 이야기하고 일정을 맞춰요.",
-  },
-];
+import MyParties from "@/components/home/MyParties";
+import TierCards from "@/components/home/TierCards";
+import TeamBalance from "@/components/home/TeamBalance";
+import FriendList from "@/components/home/FriendList";
+import RecentMatches from "@/components/home/RecentMatches";
 
+// 홈 화면. 모든 수치와 이름은 src/data/preview.ts 의 예시 데이터입니다.
+// 모바일에서는 위에서 아래로 한 줄로, PC(lg)에서는 왼쪽 넓은 열 + 오른쪽 사이드 열로 보입니다.
 export default function Home() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
-      <section className="max-w-2xl">
-        <p className="mb-4 text-sm font-medium text-secondary">GAME PARTY PLATFORM</p>
-        <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">
-          함께할 때 더 즐거운
-          <br />
-          <span className="text-primary">OS Party</span>
-        </h1>
-        <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
-          게임 파티를 만들고, 찾고, 관리하는 공간. 지금은 기본 뼈대만 준비된
-          상태이며, 아래 기능들은 앞으로 하나씩 만들어 갈 예정입니다.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <button
-            type="button"
-            disabled
-            className="rounded-full bg-primary px-6 py-3 font-bold text-background opacity-60"
-          >
-            파티 만들기 (준비 중)
-          </button>
-          <button
-            type="button"
-            disabled
-            className="rounded-full border border-card-border px-6 py-3 font-bold text-foreground opacity-60"
-          >
-            파티 둘러보기 (준비 중)
-          </button>
-        </div>
-      </section>
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:py-12">
+      <div
+        role="note"
+        className="mb-8 rounded-2xl border border-dashed border-secondary/50 bg-card px-4 py-3 text-sm text-muted"
+      >
+        <span className="font-bold text-secondary">미리보기 화면</span> · 로그인과
+        데이터베이스는 아직 연결되지 않았습니다. 화면의 이름·수치·기록은 모두
+        디자인 확인용 예시이며, 준비 중 표시가 있는 버튼은 아직 동작하지 않습니다.
+      </div>
 
-      <section className="mt-16 grid gap-4 sm:mt-24 sm:grid-cols-2 lg:grid-cols-3">
-        {upcoming.map((item) => (
-          <article
-            key={item.title}
-            className="rounded-card border border-card-border bg-card p-6"
-          >
-            <span className="rounded-full bg-primary/15 px-2.5 py-1 text-xs font-medium text-secondary">
-              예정
-            </span>
-            <h2 className="mt-4 text-xl font-bold">{item.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{item.desc}</p>
-          </article>
-        ))}
-      </section>
+      <h1 className="mb-8 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        오늘도 <span className="text-primary">파티</span> 한판 어때요?
+      </h1>
+
+      <div className="grid gap-10 lg:grid-cols-3">
+        <div className="space-y-10 lg:col-span-2">
+          <MyParties />
+          <TierCards />
+          <TeamBalance />
+        </div>
+        <div className="space-y-10">
+          <FriendList />
+          <RecentMatches />
+        </div>
+      </div>
     </div>
   );
 }
