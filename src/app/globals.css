@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/*
+  OS Party 디자인 토큰
+  색을 바꾸고 싶다면 이 파일의 :root 값만 수정하면 사이트 전체에 반영됩니다.
+*/
+:root {
+  --background: #11100f; /* 페이지 배경 (어두운 차콜) */
+  --card: #201b17; /* 카드 배경 */
+  --card-border: #332b24; /* 카드 테두리 */
+  --primary: #ff7628; /* 강조색 (따뜻한 주황) */
+  --secondary: #ffaa55; /* 보조 강조색 */
+  --foreground: #f6f0e4; /* 기본 글자 (밝은 아이보리) */
+  --muted: #a39a8e; /* 보조 글자 (따뜻한 회색) */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-noto-sans-kr), system-ui, sans-serif;
+  --radius-card: 1.25rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--background);
+}
+
+/* 키보드로 이동할 때 보이는 포커스 표시 */
+:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
